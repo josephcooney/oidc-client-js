@@ -116,6 +116,10 @@ export class OidcClient {
 
   clearStaleState(stateStore: StateStore): Promise<any>;
 
+  readSigninResponseState(url: string, stateStore: StateStore | undefined, removeState? : boolean): Promise<SigninResponseAndState>;
+
+  readSignoutResponseState(url: string, stateStore: StateStore | undefined, removeState? : boolean): Promise<SignoutResponseAndState>;
+
   readonly metadataService: MetadataService;
 }
 
@@ -285,12 +289,22 @@ export interface SigninResponse {
   readonly scopes: string[];
 }
 
+export interface SigninResponseAndState {
+  response: SigninResponse;
+  state: any;
+}
+
 export interface SignoutResponse {
   new (url: string): SignoutResponse;
 
   error: string;
   error_description: string;
   error_uri: string;
+  state: any;
+}
+
+export interface SignoutResponseAndState {
+  response: SignoutResponse;
   state: any;
 }
 
